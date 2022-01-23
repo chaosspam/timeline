@@ -1,0 +1,100 @@
+[
+  {
+    "name": "Dragalia Lost",
+    "timeZone": "+09:00",
+    "icon": "images/dragalialost.png",
+    "markers": [
+      {
+        "name": "Reset",
+        "time": "15:00"
+      }
+    ]
+  },
+  {
+    "name": "Princess Connect (Global)",
+    "timeZone": "+00:00",
+    "icon": "images/princessconnect.png",
+    "markers": [
+      {
+        "name": "Reset",
+        "time": "13:00"
+      },
+      {
+        "name": "Event",
+        "time": "00:00"
+      },
+      {
+        "name": "Stamina",
+        "time": "02:00"
+      },
+      {
+        "name": "Stamina",
+        "time": "20:00"
+      },
+      {
+        "name": "Arena",
+        "time": "23:00"
+      }
+    ]
+  },
+  {
+    "name": "Princess Connect (TW)",
+    "timeZone": "+08:00",
+    "icon": "images/princessconnect.png",
+    "markers": [
+      {
+        "name": "Reset",
+        "time": "05:00"
+      },
+      {
+        "name": "Stamina",
+        "time": "12:00"
+      },
+      {
+        "name": "Arena",
+        "time": "15:00"
+      },
+      {
+        "name": "Event",
+        "time": "16:00"
+      },
+      {
+        "name": "Stamina",
+        "time": "18:00"
+      }
+    ]
+  },
+  {
+    "name": "World Flipper (Global)",
+    "timeZone": "+00:00",
+    "icon": "images/worldflipper.png",
+    "markers": [
+      {
+        "name": "Reset",
+        "time": "20:00"
+      }
+    ]
+  },
+  {
+    "name": "Uma Musume Pretty Derby (JP)",
+    "timeZone": "+09:00",
+    "icon": "images/worldflipper.png",
+    "markers": [
+      {
+        "name": "Reset",
+        "time": "05:00"
+      }
+    ]
+  },
+  {
+    "name": "Genshin Impact (America)",
+    "timeZone": "-05:00",
+    "icon": "images/genshin.png",
+    "markers": [
+      {
+        "name": "Reset",
+        "time": "04:00"
+      }
+    ]
+  }
+]
