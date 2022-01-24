@@ -23,12 +23,16 @@ export function Marker({ marker, userTimeZone, dataTimeZone, rule, showEvent, us
 
   return (
     <div className='marker' style={{ left: percentage + '%' }} ref={ref}>
-      <span className={`marker-name ${show ? 'active' : ''}`}>
-        {marker.name}
-        <br />
-        <span className={`marker-time ${show ? 'active' : ''}`}>{timeSimple(userTimeZone, use12Hr, DateTime.fromISO(iso))}</span>
+      <span className={`marker-info ${show ? 'active' : ''}`}>
+        <div className='marker-name'>{marker.name}</div>
+        <div className='marker-time'>{timeSimple(userTimeZone, use12Hr, DateTime.fromISO(iso))}</div>
       </span>
-
+      {
+        marker.icon &&
+        <span className='marker-icon'>
+          {marker.icon}
+        </span>
+      }
     </div>
   );
 }
