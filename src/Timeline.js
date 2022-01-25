@@ -8,6 +8,7 @@ import { Marker } from "./Marker";
 export function Timeline({ userTimeZone, data, rule, use12Hr, removeTimeline }) {
 
   const [showEvent, setShowEvent] = useState(false);
+  const [imageReverted, setImageReverted] = useState(false);
 
   const markers = data.markers.map((marker, index) =>
     <Marker
@@ -21,10 +22,19 @@ export function Timeline({ userTimeZone, data, rule, use12Hr, removeTimeline }) 
     />
   );
 
+  function tryReloadDefault(e) {
+    if(!imageReverted) {
+      setImageReverted(true);
+      e.currentTarget.src = 'images/default.png';
+      // Don't loop
+      e.currentTarget.onerror = null;
+    }
+  }
+
   return (
     <figure className='timeline' tabIndex='0' aria-label={`Timeline for ${data.name}`} id={`timeline-${data.id}`}>
     <div className='timeline-info'>
-      <img src={data.icon} alt={data.name} />
+      <img src={data.icon} alt={data.name} onError={tryReloadDefault}/>
       <figcaption>{data.preset && <FontAwesomeIcon className='me-2' icon={faMobileAlt} />} {data.name}</figcaption>
       <FirstMarkerInfo
         marker={data.markers[0]}
