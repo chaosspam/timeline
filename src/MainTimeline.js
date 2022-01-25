@@ -2,31 +2,28 @@ import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
 import { Ruler } from "./Ruler";
 import { dayFraction } from './TimeHelper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 let timerId = null;
 
 export function MainTimeline({ userTimeZone, barRef, use12Hr }) {
   const [time, setTime] = useState(DateTime.now().setZone(userTimeZone));
-  const [tzSelectActive, setTzSelectActive] = useState(false);
-
-  function updateClock() {
-    setTime(DateTime.now().setZone(userTimeZone));
-  }
 
   useEffect(() => {
-    timerId = setInterval(updateClock, 1000);
-    return () => { clearInterval(timerId); };
-  }, []);
 
-  useEffect(() => {
+    function updateClock() {
+      setTime(DateTime.now().setZone(userTimeZone));
+    }
+
     if(timerId !== null) {
       clearInterval(timerId);
-      timerId = setInterval(updateClock, 1000);
-      updateClock();
     }
-  }, [userTimeZone])
+
+    timerId = setInterval(updateClock, 1000);
+    updateClock();
+
+    return () => { clearInterval(timerId); };
+
+  }, [userTimeZone]);
 
   let percentage = dayFraction(userTimeZone);
 

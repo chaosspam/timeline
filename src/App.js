@@ -23,8 +23,8 @@ function App() {
 
   // Update the bound of bar and resort marker if timezone is changed
   useEffect(() => {
-    setTimelineData(sortFirstMarker(userTimeZone, timelineData));
-    updateBound();
+    setTimelineData(currState => sortFirstMarker(userTimeZone, currState));
+    window.dispatchEvent(new Event('resize'));
   }, [userTimeZone]);
 
   // Update the storage if timeline data is changed
@@ -188,7 +188,7 @@ export function useBounds() {
   const [bound, setBound] = useState({});
 
   function updateBound() {
-    setBound(ref && ref.current ? ref.current.getBoundingClientRect() : {});
+    setBound(currBound => ref && ref.current ? ref.current.getBoundingClientRect() : {});
   }
 
   useEffect(() => {
