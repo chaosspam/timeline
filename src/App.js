@@ -20,6 +20,7 @@ function App() {
   const [userTimeZone, setUserTimeZone] = useState(loadedTimeZone);
   const [userZoneOffset, setUserZoneOffset] = useState(DateTime.now().setZone(loadedTimeZone).zone.formatOffset(Date.now(), 'short'));
   const [timelineData, setTimelineData] = useState(loadedData);
+  const [ruleActive, setRuleActive] = useState(false);
 
   // Update the bound of bar and resort marker if timezone is changed
   useEffect(() => {
@@ -90,18 +91,22 @@ function App() {
         updateTimeZone={updateTimeZone}
         userZoneOffset={userZoneOffset}
       />
-      <main className='container' onMouseMove={updateRuleLeft} onTouchStart={updateRuleLeft}>
+      <main className='container'
+        onMouseMove={updateRuleLeft}
+        onMouseEnter={()=>setRuleActive(true)}
+        onMouseLeave={()=>setRuleActive(false)}
+        onTouchStart={updateRuleLeft}
+      >
         <MainTimeline
           userTimeZone={userTimeZone}
           barRef={ref}
           use12Hr={use12Hr}
           userZoneOffset={userZoneOffset}
-          updateTimeZone={updateTimeZone}
         />
         <section>
           {timelines}
           <div className='current-rule' style={{left: bound.right + 'px'}}></div>
-          <div className='vertical-rule' style={{left: rule + 'px'}}></div>
+          <div className={`vertical-rule ${ruleActive ? 'active' : ''}`} style={{left: rule + 'px'}}></div>
         </section>
       </main>
     </>
@@ -132,7 +137,10 @@ function loadTimelineData(userTimeZone) {
   const timelineData = [];
 
   // Hash game data
-  const gamesByName = gameData.reduce((map, obj) => (map[obj.name] = obj, map), {});
+  const gamesByName = gameData.reduce((map, obj) => {
+    map[obj.name] = obj;
+    return map;
+  }, {});
 
   // Check for custom timelines
   let storedTimelines = localStorage.getItem('storedTimelines');

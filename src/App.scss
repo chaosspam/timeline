@@ -355,6 +355,7 @@ ul.ruler {
 }
 
 .vertical-rule {
+  display: none;
   border-left: 1px dashed #ffffff88;
   z-index: 999;
 }
@@ -364,9 +365,14 @@ ul.ruler {
   z-index: -2;
 }
 
+.vertical-rule.active {
+  display: initial;
+}
+
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   background-color: $background-color;
   z-index: 9999;
@@ -378,10 +384,8 @@ header {
 }
 
 .settings-panel {
-  margin-left: auto;
-
   .settings-panel-buttons {
-    width: 6rem;
+    width: 96px;
     display: flex;
     justify-content: space-between;
   }
