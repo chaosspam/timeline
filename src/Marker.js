@@ -20,12 +20,13 @@ export function Marker({ marker, userTimeZone, dataTimeZone, rule, showEvent, us
 
   const ruleInBound = bound.left ? (bound.left - 5 <= rule) && (rule <= bound.left + 5) : false;
   const show = (showEvent || ruleInBound);
+  const markerTimeSimple = timeSimple(userTimeZone, use12Hr, DateTime.fromISO(iso));
 
   return (
-    <div className='marker' style={{ left: percentage + '%' }} ref={ref}>
+    <div className='marker' style={{ left: percentage + '%' }} ref={ref} tabIndex='0' aria-label={`Marker for event ${marker.name} at ${markerTimeSimple}`}>
       <span className={`marker-info ${show ? 'active' : ''}`}>
         <div className='marker-name'>{marker.name}</div>
-        <div className='marker-time'>{timeSimple(userTimeZone, use12Hr, DateTime.fromISO(iso))}</div>
+        <div className='marker-time'>{markerTimeSimple}</div>
       </span>
       {
         marker.icon &&

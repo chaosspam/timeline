@@ -91,6 +91,7 @@ function App() {
         updateTimeZone={updateTimeZone}
         userZoneOffset={userZoneOffset}
       />
+      <KeyboardNav timelineData={timelineData}/>
       <main className='container'
         onMouseMove={updateRuleLeft}
         onMouseEnter={()=>setRuleActive(true)}
@@ -110,6 +111,26 @@ function App() {
         </section>
       </main>
     </>
+  );
+}
+
+function KeyboardNav({ timelineData }) {
+  const anchors = timelineData.map(timeline => (
+    <li key={timeline.id}>
+      <a href={`#timeline-${timeline.id}`}>{timeline.name}</a>
+    </li>
+  ));
+
+  return (
+    <nav aria-label='Skip to timeline' className='keyboard-nav'>
+      Skip to:
+      <ul>
+        <li>
+          <a href='#mainTimelineInfo'>Current Time</a>
+        </li>
+        {anchors}
+      </ul>
+    </nav>
   );
 }
 

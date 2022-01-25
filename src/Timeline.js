@@ -22,7 +22,7 @@ export function Timeline({ userTimeZone, data, rule, use12Hr, removeTimeline }) 
   );
 
   return (
-    <figure className='timeline' tabIndex='0'>
+    <figure className='timeline' tabIndex='0' aria-label={`Timeline for ${data.name}`} id={`timeline-${data.id}`}>
     <div className='timeline-info'>
       <img src={data.icon} alt={data.name} />
       <figcaption>{data.preset && <FontAwesomeIcon className='me-2' icon={faMobileAlt} />} {data.name}</figcaption>
@@ -49,17 +49,22 @@ function FirstMarkerInfo({marker, userTimeZone, use12Hr, removeTimeline, data}) 
   let info = undefined;
   if(marker) {
     const markerTime = DateTime.fromISO(marker.time + data.timeZone);
+    const markerTimeSimple = timeSimple(userTimeZone, use12Hr, markerTime);
+    const markerTimeRemaining = timeRemaining(markerTime).toHuman({ unitDisplay: "short" }).replace(',', '');
+
     info = (
-      <span className='first-marker-info'>
+      <span
+        className='first-marker-info'
+        tabIndex='0'
+        aria-label={`Info for event ${marker.name} at ${markerTimeSimple} in ${markerTimeRemaining}`}
+      >
         {marker.icon && <span className='first-icon'>{marker.icon}</span>}
         <span className='first-time'>
-          {marker.name} @ {timeSimple(userTimeZone, use12Hr, markerTime)}
+          {marker.name} @ {markerTimeSimple}
         </span>
         <span className='remaining-time'>
           <FontAwesomeIcon icon={faArrowRight} />
-          {timeRemaining(markerTime).toHuman({
-            unitDisplay: "short"
-          }).replace(',', '')}
+          {markerTimeRemaining}
         </span>
       </span>
     );
@@ -69,8 +74,8 @@ function FirstMarkerInfo({marker, userTimeZone, use12Hr, removeTimeline, data}) 
     <div className='timeline-toolbar'>
       { info }
       <span className='timeline-toolbar-buttons'>
-        <button onClick={() => console.log('edit')}><FontAwesomeIcon icon={faEdit} /></button>
-        <button onClick={() => removeTimeline(data.id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+        <button aria-label='Edit timeline' onClick={() => console.log('edit')}><FontAwesomeIcon icon={faEdit} /></button>
+        <button aria-label='Remove timeline' onClick={() => removeTimeline(data.id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
       </span>
     </div>
     );

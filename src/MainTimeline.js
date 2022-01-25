@@ -25,13 +25,14 @@ export function MainTimeline({ userTimeZone, barRef, use12Hr }) {
 
   }, [userTimeZone]);
 
-  let percentage = dayFraction(userTimeZone);
+  const percentage = dayFraction(userTimeZone);
+  const currentTime = time.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS);
 
   return (
-    <figure className='main-timeline'>
+    <figure className='main-timeline' id='mainTimelineInfo'>
       <div className='main-timeline-info'>
-        <figcaption>
-          {time.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
+        <figcaption tabIndex='0' aria-label={`The current time is ${currentTime}`}>
+          {currentTime}
         </figcaption>
       </div>
       <div className='timeline-bar'>

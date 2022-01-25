@@ -66,6 +66,10 @@ option {
   z-index: 999;
   padding: 1.5rem 20px;
 
+  figcaption:focus-visible {
+    outline: 2px solid $primary;
+  }
+
   .main-timeline-info {
     display: flex;
     align-items: center;
@@ -83,6 +87,26 @@ option {
       max-width: 100%;
     }
   }
+}
+
+.keyboard-nav {
+  position: fixed;
+  z-index: 999999;
+  background-color: $background-color;
+  border-radius: 0 $border-roundness $border-roundness 0;
+  border: 2px solid $highlight-color;
+  border-left: none;
+  padding: 1rem;
+  transform: translateX(-100%);
+  transition: transform 0.1s ease;
+
+  a:focus-visible {
+    outline: 2px solid $primary;
+  }
+}
+
+.keyboard-nav:focus-visible, .keyboard-nav:focus-within{
+  transform: translateX(0);
 }
 
 .timeline {
@@ -114,25 +138,32 @@ option {
 
 .first-icon {
   color: $primary;
-  margin-right: 0.5rem;
+  margin: 0 0.25rem;
 }
 
 .timeline-toolbar {
   white-space: nowrap;
   margin-left: auto;
-  padding: 0 0.25rem;
-  border-radius: $border-roundness;
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   font-size: 0.85rem;
-  background-color: $highlight-color;
   z-index: 99;
 
+  width: 290px;
+
   .first-marker-info {
-    width: 230px;
-    padding-left: 0.25rem;
+    padding: 0 0.25rem;
+    margin-right: 0.25rem;
+    flex-grow: 1;
+    border-radius: $border-roundness;
+    background-color: $highlight-color;
+  }
+
+  .first-marker-info:focus-visible {
+    outline: 2px solid $primary;
   }
 
   .remaining-time {
@@ -140,7 +171,11 @@ option {
   }
 
   .timeline-toolbar-buttons {
+    width: fit-content;
     margin-left: auto;
+    padding: 0 0.25rem;
+    border-radius: $border-roundness;
+    background-color: $highlight-color;
   }
 
   svg {
@@ -155,6 +190,8 @@ button {
   border: none;
   background: initial;
   border-radius: $border-roundness;
+  margin: 0;
+  padding: 0;
 }
 
 button:focus-visible {
@@ -254,6 +291,14 @@ button:hover {
 .timeline:focus .marker .marker-info.active {
   height: auto;
   opacity: 1;
+}
+
+.marker:focus-visible {
+  outline: none;
+  .marker-info {
+    height: auto;
+    opacity: 1;
+  }
 }
 
 ul.ruler {
@@ -403,8 +448,8 @@ main {
     white-space: pre-wrap;
   }
 
-  .first-marker-info {
-    margin-top: 0.15rem;
+  .timeline-toolbar {
+    margin-top: 0.2rem;
     width: 100%;
   }
 
