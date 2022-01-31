@@ -25,6 +25,7 @@
   {"label":"(GMT-02:00) Mid-Atlantic","value":"-02:00"},
   {"label":"(GMT-01:00) Cape Verde Is.","value":"-01:00"},
   {"label":"(GMT-01:00) Azores","value":"-01:00"},
+  {"label":"(GMT+00:00) UTC","value":"+00:00"},
   {"label":"(GMT+00:00) Casablanca, Monrovia, Reykjavik","value":"+00:00"},
   {"label":"(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London","value":"+00:00"},
   {"label":"(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna","value":"+01:00"},
