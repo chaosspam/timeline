@@ -1,14 +1,10 @@
 [
   {
     "name": "Dragalia Lost",
-    "timeZone": "+09:00",
+    "timeZone": "+00:00",
     "icon": "images/dragalialost.png",
     "markers": [
-      {
-        "name": "Reset",
-        "time": "15:00",
-        "icon": "▲"
-      }
+      { "name": "Reset", "time": "06:00", "icon": "▲" }
     ]
   },
   {
@@ -16,36 +12,12 @@
     "timeZone": "+00:00",
     "icon": "images/princessconnect.png",
     "markers": [
-      {
-        "name": "Reset",
-        "time": "13:00",
-        "icon": "▲"
-      },
-      {
-        "name": "Event",
-        "time": "00:00",
-        "icon": "📅"
-      },
-      {
-        "name": "Stamina",
-        "time": "02:00",
-        "icon": "🧪"
-      },
-      {
-        "name": "CB End",
-        "time": "07:59",
-        "icon": "🛡️"
-      },
-      {
-        "name": "Stamina",
-        "time": "20:00",
-        "icon": "🧪"
-      },
-      {
-        "name": "Arena",
-        "time": "23:00",
-        "icon": "⚔️"
-      }
+      { "name": "Reset", "time": "13:00", "icon": "▲" },
+      { "name": "Event", "time": "00:00", "icon": "📅" },
+      { "name": "Stamina", "time": "02:00", "icon": "🧪" },
+      { "name": "CB End", "time": "07:59", "icon": "🛡️" },
+      { "name": "Stamina", "time": "20:00", "icon": "🧪" },
+      { "name": "Arena", "time": "23:00", "icon": "⚔️" }
     ]
   },
   {
@@ -53,36 +25,12 @@
     "timeZone": "+08:00",
     "icon": "images/princessconnect.png",
     "markers": [
-      {
-        "name": "Reset",
-        "time": "05:00",
-        "icon": "▲"
-      },
-      {
-        "name": "Stamina",
-        "time": "12:00",
-        "icon": "🧪"
-      },
-      {
-        "name": "Arena",
-        "time": "15:00",
-        "icon": "⚔️"
-      },
-      {
-        "name": "Event",
-        "time": "16:00",
-        "icon": "📅"
-      },
-      {
-        "name": "Stamina",
-        "time": "18:00",
-        "icon": "🧪"
-      },
-      {
-        "name": "CB End",
-        "time": "23:59",
-        "icon": "🛡️"
-      }
+      { "name": "Reset", "time": "05:00", "icon": "▲" },
+      { "name": "Stamina", "time": "12:00", "icon": "🧪" },
+      { "name": "Arena", "time": "15:00", "icon": "⚔️" },
+      { "name": "Event", "time": "16:00", "icon": "📅" },
+      { "name": "Stamina", "time": "18:00", "icon": "🧪" },
+      { "name": "CB End", "time": "23:59", "icon": "🛡️" }
     ]
   },
   {
@@ -90,11 +38,7 @@
     "timeZone": "+09:00",
     "icon": "images/worldflipper.png",
     "markers": [
-      {
-        "name": "Reset",
-        "time": "05:00",
-        "icon": "▲"
-      }
+      { "name": "Reset", "time": "05:00", "icon": "▲" }
     ]
   },
   {
@@ -102,11 +46,7 @@
     "timeZone": "+00:00",
     "icon": "images/worldflipper.png",
     "markers": [
-      {
-        "name": "Reset",
-        "time": "20:00",
-        "icon": "▲"
-      }
+      { "name": "Reset", "time": "20:00", "icon": "▲" }
     ]
   },
   {
@@ -114,11 +54,7 @@
     "timeZone": "-05:00",
     "icon": "images/genshin.png",
     "markers": [
-      {
-        "name": "Reset",
-        "time": "04:00",
-        "icon": "▲"
-      }
+      { "name": "Reset", "time": "04:00", "icon": "▲" }
     ]
   }
 ]
