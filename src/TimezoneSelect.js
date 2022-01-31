@@ -2,7 +2,7 @@ import { DateTime } from 'luxon';
 import timeZones from './data/timezones.json';
 import { localZoneOffset } from './TimeHelper';
 
-export function TimezoneSelect({value, onChange, className}) {
+export default function TimezoneSelect({ value, onChange, className }) {
   const zones = timeZones.map((zone, index) =>
     <option key={index} value={zone.value}>{zone.label}</option>
   );

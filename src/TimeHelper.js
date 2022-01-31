@@ -7,7 +7,7 @@ function dayFraction(userTimeZone) {
 }
 
 function dayFractionAt(userTimeZone, dateTime) {
-  if(!dateTime) {
+  if (!dateTime) {
     return 0;
   }
 
@@ -22,12 +22,12 @@ function dayFractionAt(userTimeZone, dateTime) {
 
   let fraction = -midnight.diff(dateTime, 'seconds').values.seconds / SECONDS_PER_DAY;
 
-  if(fraction > 1) {
-    while(fraction > 1) {
+  if (fraction > 1) {
+    while (fraction > 1) {
       fraction -= 1;
     }
   } else if (fraction < 0) {
-    while(fraction < 0) {
+    while (fraction < 0) {
       fraction += 1;
     }
   }
@@ -38,13 +38,13 @@ function dayFractionAt(userTimeZone, dateTime) {
 function timeRemaining(dateTime) {
   let diff = dateTime.diff(DateTime.now(), 'seconds').values.seconds;
 
-  while(diff < 0) {
+  while (diff < 0) {
     diff += SECONDS_PER_DAY;
   }
 
   const duration = Duration.fromMillis(diff * 1000).shiftTo('hours', 'minutes').mapUnits(
     (x, u) => {
-      if(u === 'minutes') {
+      if (u === 'minutes') {
         return Math.ceil(x);
       } else {
         return x;
@@ -52,7 +52,7 @@ function timeRemaining(dateTime) {
     }
   );
 
-  if(duration.hours === 0) {
+  if (duration.hours === 0) {
     return duration.shiftTo('minutes');
   }
 
@@ -64,7 +64,7 @@ function timeSimple(userTimeZone, use12Hr, dateTime) {
   return dateTime.setZone(userTimeZone).toLocaleString(dateFormat);
 }
 
-function localZoneOffset(){
+function localZoneOffset() {
   return DateTime.local().zone.formatOffset(Date.now(), 'short');
 }
 

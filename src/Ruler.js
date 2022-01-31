@@ -1,4 +1,4 @@
-export function Ruler({ use12Hr }) {
+export default function Ruler({ use12Hr }) {
   const ticks = [];
 
   for (let i = 0; i < 12; i++) {
@@ -26,7 +26,7 @@ export function Ruler({ use12Hr }) {
   }
 
   return (
-    <ul className='ruler'>
+    <ul className='ruler' aria-hidden='true'>
       {ticks}
     </ul>
   );

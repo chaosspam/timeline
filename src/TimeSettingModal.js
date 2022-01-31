@@ -1,10 +1,9 @@
 import { Modal, Button, InputGroup, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
-import { TimezoneSelect } from './TimezoneSelect';
-import { useEffect, useState } from 'react';
+import TimezoneSelect from './TimezoneSelect';
 
-export function TimeSettingModal({show, onHide, use12Hr, setUse12Hr, userZoneOffset, updateTimeZone}) {
+export default function TimeSettingModal({ show, onHide, use12Hr, setUse12Hr, userZoneOffset, updateTimeZone }) {
   return (
     <Modal
       show={show}
@@ -14,12 +13,12 @@ export function TimeSettingModal({show, onHide, use12Hr, setUse12Hr, userZoneOff
     >
       <Modal.Header closeButton>
         <Modal.Title id="timeSetting.Modal">
-          <FontAwesomeIcon icon={faClock} className='me-2'/> Time Settings
+          <FontAwesomeIcon icon={faClock} className='me-2' /> Time Settings
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Label id="timeSetting.timezone">Current Time Zone</Form.Label>
-        <InputGroup  className="mb-3" aria-describedby="timeSetting.timezone">
+        <InputGroup className="mb-3" aria-describedby="timeSetting.timezone">
           <TimezoneSelect
             className='form-select'
             value={userZoneOffset}
@@ -27,7 +26,7 @@ export function TimeSettingModal({show, onHide, use12Hr, setUse12Hr, userZoneOff
           />
         </InputGroup>
         <Form.Label id="timeSetting.use12hr">Use 12-hour Format</Form.Label>
-        <InputGroup  className="mb-3" aria-describedby="timeSetting.use12hr">
+        <InputGroup className="mb-3" aria-describedby="timeSetting.use12hr">
           <Form.Check
             type="switch"
             id="custom-switch"

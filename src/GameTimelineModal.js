@@ -6,14 +6,14 @@ import gameData from './data/game.json';
 
 let tlId = 0;
 
-export function GameTimelineModal({show, onHide, addTimeline}) {
+export default function GameTimelineModal({ show, onHide, addTimeline }) {
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [selected, setSelected] = useState([]);
 
   function addGame(tl) {
-    setSelected([...selected, {id: getNewId(), timeline: tl}]);
+    setSelected([...selected, { id: getNewId(), timeline: tl }]);
   }
 
   function removeGame(id) {
@@ -33,11 +33,11 @@ export function GameTimelineModal({show, onHide, addTimeline}) {
   );
 
   const queryResults = results.map((timeline, index) => {
-    return <GameInfo key={index} timeline={timeline} addGame={addGame}/>
+    return <GameInfo key={index} timeline={timeline} addGame={addGame} />
   });
 
   const selectedTimelines = selected.map((item, index) => {
-    return <SelectedGameInfo key={item.id} item={item} removeGame={removeGame}/>
+    return <SelectedGameInfo key={item.id} item={item} removeGame={removeGame} />
   });
 
   return (
@@ -49,12 +49,12 @@ export function GameTimelineModal({show, onHide, addTimeline}) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="addGame.Modal">
-          <FontAwesomeIcon icon={faMobileAlt} className='me-2'/> Add Game Preset
+          <FontAwesomeIcon icon={faMobileAlt} className='me-2' /> Add Game Preset
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Label id="addGame.GameSearch">Search for Games to Add</Form.Label>
-        <InputGroup  className="mb-3" aria-describedby="addGame.GameSearch">
+        <InputGroup className="mb-3" aria-describedby="addGame.GameSearch">
           <Form.Control
             placeholder="Name of Game"
             value={query}
@@ -64,7 +64,7 @@ export function GameTimelineModal({show, onHide, addTimeline}) {
         <div className='game-container'>
           {queryResults}
         </div>
-        <Form.Label>Games to Add</Form.Label>
+        <Form.Label>List of Games to Add</Form.Label>
         <div className='game-container'>
           {selectedTimelines}
         </div>
@@ -77,7 +77,7 @@ export function GameTimelineModal({show, onHide, addTimeline}) {
         }}>
           Cancel
         </Button>
-        <Button onClick={() => {
+        <Button aria-label={'Add selected games'} onClick={() => {
           addTimeline(...selected.map(x => x.timeline));
           setSelected([]);
           onHide();
@@ -94,22 +94,22 @@ function getNewId() {
   return tlId;
 }
 
-function GameInfo({timeline, addGame}) {
+function GameInfo({ timeline, addGame }) {
   return (
     <div className='game-info'>
-      <img src={timeline.icon} alt={timeline.name} />
-      <h4>{timeline.name}</h4>
-    <button onClick={() => addGame({...timeline, preset: true})}><FontAwesomeIcon icon={faPlus} className='me-2'/></button>
+      <img aria-hidden='true' src={timeline.icon} alt={timeline.name} />
+      <h4 aria-label={`${timeline.name}, add button on the right`}>{timeline.name}</h4>
+      <button aria-label={`Add ${timeline.name} to list of games to add`} onClick={() => addGame({ ...timeline, preset: true })}><FontAwesomeIcon icon={faPlus} className='me-2' /></button>
     </div>
   );
 }
 
-function SelectedGameInfo({item, removeGame}) {
+function SelectedGameInfo({ item, removeGame }) {
   return (
     <div className='game-info'>
-    <img src={item.timeline.icon} alt={item.timeline.name} />
-    <h4>{item.timeline.name}</h4>
-      <button onClick={() => removeGame(item.id)}><FontAwesomeIcon icon={faTrashAlt} className='me-2'/></button>
+      <img aria-hidden='true' src={item.timeline.icon} alt={item.timeline.name} />
+      <h4 aria-label={`${item.timeline.name}, remove button on the right`}>{item.timeline.name}</h4>
+      <button aria-label={`Remove ${item.timeline.name} from list of games to add`} onClick={() => removeGame(item.id)}><FontAwesomeIcon icon={faTrashAlt} className='me-2' /></button>
     </div>
   );
 }

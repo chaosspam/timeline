@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
-import { Ruler } from "./Ruler";
 import { dayFraction } from './TimeHelper';
+import Ruler from "./Ruler";
 
 let timerId = null;
 
-export function MainTimeline({ userTimeZone, barRef, use12Hr }) {
+export default function MainTimeline({ userTimeZone, barRef, use12Hr }) {
   const [time, setTime] = useState(DateTime.now().setZone(userTimeZone));
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function MainTimeline({ userTimeZone, barRef, use12Hr }) {
       setTime(DateTime.now().setZone(userTimeZone));
     }
 
-    if(timerId !== null) {
+    if (timerId !== null) {
       clearInterval(timerId);
     }
 
@@ -31,7 +31,7 @@ export function MainTimeline({ userTimeZone, barRef, use12Hr }) {
   return (
     <figure className='main-timeline' id='mainTimelineInfo'>
       <div className='main-timeline-info'>
-        <figcaption tabIndex='0' aria-label={`The current time is ${currentTime}`}>
+        <figcaption tabIndex='0'>
           {currentTime}
         </figcaption>
       </div>

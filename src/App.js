@@ -1,16 +1,33 @@
 import './App.scss';
 import gameData from './data/game.json';
-import { useEffect, useState, useRef } from 'react';
-import { Header } from './Header';
-import { MainTimeline } from './MainTimeline';
-import { Timeline } from './Timeline';
-import { dayFractionAt } from './TimeHelper';
+import { useEffect, useState } from 'react';
+
+import Header from './Header';
+import MainTimeline from './MainTimeline';
+import Timeline from './Timeline';
+import TimelineEditModal from './TimelineEditModal';
+import GameTimelineModal from './GameTimelineModal';
+import TimeSettingModal from './TimeSettingModal';
+import InfoModal from './InfoModal';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+
+import { dayFractionAt, localZoneOffset } from './TimeHelper';
+import { useBounds } from './useBounds';
 import { DateTime } from 'luxon';
 
 let timelineId = 0;
 let timelineToStore = [];
 const loadedTimeZone = loadTimeZone();
 const loadedData = loadTimelineData(loadedTimeZone);
+
+const defaultTimeline = {
+  name: 'Timeline',
+  timeZone: localZoneOffset(),
+  icon: 'images/default.png',
+  markers: []
+}
 
 function App() {
 
@@ -21,6 +38,15 @@ function App() {
   const [userZoneOffset, setUserZoneOffset] = useState(DateTime.now().setZone(loadedTimeZone).zone.formatOffset(Date.now(), 'short'));
   const [timelineData, setTimelineData] = useState(loadedData);
   const [ruleActive, setRuleActive] = useState(false);
+
+  const [infoModalShow, setInfoModalShow] = useState(false);
+  const [addModalShow, setAddModalShow] = useState(false);
+  const [gameModalShow, setGameModalShow] = useState(false);
+  const [timeModalShow, setTimeModalShow] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+
+  const [editTimeline, setEditTimeline] = useState(defaultTimeline);
+
 
   // Update the bound of bar and resort marker if timezone is changed
   useEffect(() => {
@@ -40,11 +66,11 @@ function App() {
 
   function addTimeline() {
     const toAdd = [];
-    for(let i = 0; i < arguments.length; i++) {
+    for (let i = 0; i < arguments.length; i++) {
       const timeline = arguments[i];
-      if(validateTimeline(timeline)) {
+      if (validateTimeline(timeline)) {
         timelineToStore.push(timeline);
-        toAdd.push({...timeline, id: getNewId()});
+        toAdd.push({ ...timeline, id: getNewId() });
       }
     }
     setTimelineData(sortFirstMarker(userTimeZone, timelineData.concat(toAdd)));
@@ -54,12 +80,11 @@ function App() {
     setTimelineData(timelineData.filter(tl => tl.id !== id));
   };
 
-  function updateTimeline(id, update) {
-    setTimelineData(timelineData.map(tl => tl.id === id ?  Object.assign(tl, update) : tl));
+  function updateTimeline(newTl) {
+    setTimelineData(timelineData.map(tl => tl.id === newTl.id ? Object.assign(tl, newTl) : tl));
   };
 
   function updateTimeZone(zoneOffset) {
-    console.log(zoneOffset);
     const timeZone = 'UTC' + zoneOffset;
     localStorage.setItem('userTimeZone', timeZone);
     setUserZoneOffset(zoneOffset);
@@ -68,7 +93,17 @@ function App() {
   }
 
   function updateRuleLeft(e) {
-    setRule(e.clientX);
+    if (e.type === 'touchmove') {
+      setRule(e.touches[0].pageX);
+    }
+    else {
+      setRule(e.clientX);
+    }
+  }
+
+  function startEdit(timeline) {
+    setEditTimeline(timeline);
+    setEditModalShow(true);
   }
 
   const timelines = timelineData.map(timeline =>
@@ -79,24 +114,24 @@ function App() {
       userTimeZone={userTimeZone}
       removeTimeline={removeTimeline}
       use12Hr={use12Hr}
+      startEdit={startEdit}
     />
   );
 
   return (
     <>
       <Header
-        use12Hr={use12Hr}
-        setUse12Hr={setUse12Hr}
-        addTimeline={addTimeline}
-        updateTimeZone={updateTimeZone}
-        userZoneOffset={userZoneOffset}
+        setTimeModalShow={setTimeModalShow}
+        setGameModalShow={setGameModalShow}
+        setAddModalShow={setAddModalShow}
+        setInfoModalShow={setInfoModalShow}
       />
-      <KeyboardNav timelineData={timelineData}/>
+      <KeyboardNav timelineData={timelineData} />
       <main className='container'
+        onTouchMove={updateRuleLeft}
         onMouseMove={updateRuleLeft}
-        onMouseEnter={()=>setRuleActive(true)}
-        onMouseLeave={()=>setRuleActive(false)}
-        onTouchStart={updateRuleLeft}
+        onMouseEnter={() => setRuleActive(true)}
+        onMouseLeave={() => setRuleActive(false)}
       >
         <MainTimeline
           userTimeZone={userTimeZone}
@@ -106,10 +141,36 @@ function App() {
         />
         <section>
           {timelines}
-          <div className='current-rule' style={{left: bound.right + 'px'}}></div>
-          <div className={`vertical-rule ${ruleActive ? 'active' : ''}`} style={{left: rule + 'px'}}></div>
+          <div className='current-rule' style={{ left: bound.right + 'px' }}></div>
+          <div className={`vertical-rule ${ruleActive ? 'active' : ''}`} style={{ left: rule + 'px' }}></div>
         </section>
       </main>
+      <TimelineEditModal
+        show={addModalShow}
+        onHide={() => setAddModalShow(false)}
+        startTimeline={defaultTimeline}
+        onSave={addTimeline}
+        title={<><FontAwesomeIcon icon={faPlus} className='me-2' /> Add Timeline</>}
+      />
+      <TimelineEditModal
+        show={editModalShow}
+        onHide={() => setEditModalShow(false)}
+        startTimeline={editTimeline}
+        onSave={updateTimeline}
+        title={<><FontAwesomeIcon icon={faEdit} className='me-2' /> Edit Timeline</>}
+      />
+      <GameTimelineModal
+        show={gameModalShow}
+        onHide={() => setGameModalShow(false)}
+        addTimeline={addTimeline}
+      />
+      <TimeSettingModal show={timeModalShow} onHide={() => setTimeModalShow(false)}
+        use12Hr={use12Hr}
+        setUse12Hr={setUse12Hr}
+        updateTimeZone={updateTimeZone}
+        userZoneOffset={userZoneOffset}
+      />
+      <InfoModal  show={infoModalShow} onHide={() => setInfoModalShow(false)} />
     </>
   );
 }
@@ -168,13 +229,14 @@ function loadTimelineData(userTimeZone) {
   if (storedTimelines) {
     try {
       storedTimelines = JSON.parse(storedTimelines);
-      for(let i = 0; i < storedTimelines.length; i++) {
+      for (let i = 0; i < storedTimelines.length; i++) {
         const tl = storedTimelines[i];
-        if(validateTimeline(tl)) {
+        if (validateTimeline(tl)) {
 
           // Check if it's a game preset, make sure data is up to date if it is
           const game = gamesByName[tl.name];
-          if(game !== undefined && tl.preset) {
+          if (game !== undefined && tl.preset) {
+            tl.timeZone = game.timeZone;
             tl.markers = game.markers;
           }
 
@@ -187,7 +249,7 @@ function loadTimelineData(userTimeZone) {
     }
   }
 
-  for(let i = 0; i < timelineData.length; i++) {
+  for (let i = 0; i < timelineData.length; i++) {
     timelineData[i].id = getNewId();
   }
 
@@ -211,7 +273,7 @@ function getNewId() {
 function validateTimeline(timeline) {
   return timeline.name !== undefined && timeline.timeZone !== undefined && timeline.icon !== undefined && timeline.markers !== undefined;
 }
-
+/*
 export function useBounds() {
   const ref = useRef();
   const [bound, setBound] = useState({});
@@ -227,6 +289,6 @@ export function useBounds() {
   }, []);
 
   return [bound, ref, updateBound];
-}
+}*/
 
 export default App;

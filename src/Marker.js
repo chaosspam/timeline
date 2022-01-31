@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import { useBounds } from './App';
+import { useBounds } from './useBounds';
 import { dayFractionAt, timeSimple } from './TimeHelper';
 
 
-export function Marker({ marker, userTimeZone, dataTimeZone, rule, showEvent, use12Hr }) {
+export default function Marker({ marker, userTimeZone, dataTimeZone, rule, showEvent, use12Hr }) {
 
   const [bound, ref] = useBounds();
 
@@ -24,13 +24,13 @@ export function Marker({ marker, userTimeZone, dataTimeZone, rule, showEvent, us
 
   return (
     <div className='marker' style={{ left: percentage + '%' }} ref={ref} tabIndex='0' aria-label={`Marker for event ${marker.name} at ${markerTimeSimple}`}>
-      <span className={`marker-info ${show ? 'active' : ''}`}>
+      <span className={`marker-info ${show ? 'active' : ''}`} aria-hidden='true'>
         <div className='marker-name'>{marker.name}</div>
         <div className='marker-time'>{markerTimeSimple}</div>
       </span>
       {
         marker.icon &&
-        <span className='marker-icon'>
+        <span className='marker-icon' role='note' aria-label={`${marker.name} at ${markerTimeSimple}`}>
           {marker.icon}
         </span>
       }
